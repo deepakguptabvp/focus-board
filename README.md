@@ -1,16 +1,26 @@
-# React + Vite
+# WorkMatrix — Modern Task & Project Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WorkMatrix is an ultra-fast, high-aesthetic task and project management workspace built with React, Vite, Tailwind CSS, and HTML5 drag-and-drop.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 📊 **Dynamic Dashboard**: Real-time productivity metrics, time-aware greetings, urgent deadline tracking, and instant task capture.
+- 📋 **Multi-View Workspace**:
+  - **List View (Default)**: Detailed rows with progress meters, category tags, and priority indicators.
+  - **Grid View**: Responsive card grid with micro-interactions.
+- ⚡ **Interactive Checklist / Subtasks**: Build subtask lists with automatic progress tracking and celebratory confetti animations upon completion.
+- 🔍 **Real-Time Search & Multi-Filters**: Instant search by title/description, filter by categories (*Work, Development, Design, Personal, Health*), status, and priority.
+- 👤 **Profile & Analytics Hub**: Custom daily goal targets, lifetime stats, and JSON backup export/import tools.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Install dependencies
+npm install
 
-## Expanding the ESLint configuration
+# Start development server
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Build for production
+npm run build
+```

@@ -55,7 +55,7 @@ const Header = () => {
   }, []);
 
   const currentPage = pageTitles[location.pathname] || {
-    title: "WorkMatrix",
+    title: "FocusBoard",
     subtitle: "Manage your tasks effectively",
   };
 

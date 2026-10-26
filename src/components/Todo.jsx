@@ -52,7 +52,7 @@ const Todo = () => {
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto shadow-md  ">
         {/* <h1 className="text-4xl font-bold text-center text-gray-100 mb-8">
-          WorkMatrix App
+          FocusBoard App
         </h1> */}
 
         {/* Add Task */}

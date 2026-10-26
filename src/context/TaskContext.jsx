@@ -7,85 +7,11 @@ export const CATEGORIES = ["All", "Work", "Development", "Design", "Personal", "
 export const PRIORITIES = ["all", "high", "medium", "low"];
 export const STATUSES = ["all", "todo", "in_progress", "completed"];
 
-const DEFAULT_TASKS = [
-  {
-    id: "task-1",
-    title: "Revamp WorkMatrix Dashboard UI/UX",
-    description: "Build an ultra-sleek, interactive dark glassmorphic interface with real-time stats and kanban views.",
-    priority: "high",
-    category: "Design",
-    status: "in_progress",
-    dueDate: new Date(Date.now() + 86400000).toISOString().split("T")[0],
-    subtasks: [
-      { id: "st-1", text: "Create high-fidelity color scheme and typography", completed: true },
-      { id: "st-2", text: "Implement interactive Kanban board", completed: true },
-      { id: "st-3", text: "Add smooth celebratory completion micro-interactions", completed: false },
-    ],
-    createdAt: new Date(Date.now() - 172800000).toISOString(),
-  },
-  {
-    id: "task-2",
-    title: "Setup API Integration & Data Sync",
-    description: "Structure modular services for local storage persistence and mock cloud synchronization.",
-    priority: "high",
-    category: "Development",
-    status: "todo",
-    dueDate: new Date(Date.now() + 2 * 86400000).toISOString().split("T")[0],
-    subtasks: [
-      { id: "st-4", text: "Build JSON backup and import feature", completed: true },
-      { id: "st-5", text: "Add offline caching resilience", completed: false },
-    ],
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-  },
-  {
-    id: "task-3",
-    title: "Weekly Product Strategy Review",
-    description: "Align with the engineering & design teams on roadmap milestones for the upcoming sprint.",
-    priority: "medium",
-    category: "Work",
-    status: "todo",
-    dueDate: new Date().toISOString().split("T")[0], // Due today!
-    subtasks: [
-      { id: "st-6", text: "Prepare slide deck on feature prioritization", completed: false },
-      { id: "st-7", text: "Collect team feedback and velocity metrics", completed: false },
-    ],
-    createdAt: new Date(Date.now() - 43200000).toISOString(),
-  },
-  {
-    id: "task-4",
-    title: "Morning HIIT & Core Workout",
-    description: "30-minute cardio circuit and core strengthening exercises for energy boost.",
-    priority: "low",
-    category: "Health",
-    status: "completed",
-    dueDate: new Date().toISOString().split("T")[0],
-    subtasks: [
-      { id: "st-8", text: "Warmup stretches (5 min)", completed: true },
-      { id: "st-9", text: "HIIT Tabata circuit (20 min)", completed: true },
-    ],
-    createdAt: new Date(Date.now() - 259200000).toISOString(),
-  },
-  {
-    id: "task-5",
-    title: "Read 2 Chapters of 'System Design Interview'",
-    description: "Study distributed caching, CDN mechanisms, and database sharding techniques.",
-    priority: "medium",
-    category: "Personal",
-    status: "in_progress",
-    dueDate: new Date(Date.now() + 3 * 86400000).toISOString().split("T")[0],
-    subtasks: [
-      { id: "st-10", text: "Take digital notes on cache invalidation", completed: true },
-      { id: "st-11", text: "Draw architectural diagrams for high throughput", completed: false },
-    ],
-    createdAt: new Date(Date.now() - 100000000).toISOString(),
-  },
-];
-
 const DEFAULT_PROFILE = {
   name: "Guest User",
   role: "Workspace Member",
-  email: "guest@workmatrix.io",
-  bio: "Welcome to WorkMatrix! Organize tasks, track daily milestones, and boost productivity.",
+  email: "guest@focusboard.io",
+  bio: "Welcome to FocusBoard! Organize tasks, track daily milestones, and boost productivity.",
   avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
   dailyGoal: 5,
 };
@@ -93,16 +19,28 @@ const DEFAULT_PROFILE = {
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState(() => {
     try {
-      const saved = localStorage.getItem("workmatrix_tasks_v1");
-      return saved ? JSON.parse(saved) : DEFAULT_TASKS;
+      const saved =
+        localStorage.getItem("focusboard_tasks_v1") ||
+        localStorage.getItem("workmatrix_tasks_v1");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          // Filter out legacy mock task IDs if present in localStorage
+          const legacyMockIds = ["task-1", "task-2", "task-3", "task-4", "task-5"];
+          return parsed.filter((task) => !legacyMockIds.includes(task.id));
+        }
+      }
+      return [];
     } catch {
-      return DEFAULT_TASKS;
+      return [];
     }
   });
 
   const [profile, setProfile] = useState(() => {
     try {
-      const saved = localStorage.getItem("workmatrix_profile_v1");
+      const saved =
+        localStorage.getItem("focusboard_profile_v1") ||
+        localStorage.getItem("workmatrix_profile_v1");
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.name === "Deepak Gupta") {
@@ -132,11 +70,11 @@ export const TaskProvider = ({ children }) => {
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem("workmatrix_tasks_v1", JSON.stringify(tasks));
+    localStorage.setItem("focusboard_tasks_v1", JSON.stringify(tasks));
   }, [tasks]);
 
   useEffect(() => {
-    localStorage.setItem("workmatrix_profile_v1", JSON.stringify(profile));
+    localStorage.setItem("focusboard_profile_v1", JSON.stringify(profile));
   }, [profile]);
 
   // Confetti trigger
@@ -281,7 +219,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   const resetToDemo = () => {
-    setTasks(DEFAULT_TASKS);
+    setTasks([]);
     setProfile(DEFAULT_PROFILE);
   };
 
@@ -289,7 +227,7 @@ export const TaskProvider = ({ children }) => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
     const downloadAnchor = document.createElement("a");
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `workmatrix-backup-${new Date().toISOString().split("T")[0]}.json`);
+    downloadAnchor.setAttribute("download", `focusboard-backup-${new Date().toISOString().split("T")[0]}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

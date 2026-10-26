@@ -1,6 +1,6 @@
-# WorkMatrix — Modern Task & Project Management
+# FocusBoard — Modern Task & Project Management
 
-WorkMatrix is an ultra-fast, high-aesthetic task and project management workspace built with React, Vite, Tailwind CSS, and HTML5 drag-and-drop.
+FocusBoard is an ultra-fast, high-aesthetic task and project management workspace built with React, Vite, Tailwind CSS, and HTML5 drag-and-drop.
 
 ## Features
 

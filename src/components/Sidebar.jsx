@@ -79,7 +79,7 @@ const Sidebar = () => {
               </div>
               <div>
                 <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-                  WorkMatrix
+                  FocusBoard
                 </span>
                 <span className="block text-[10px] font-semibold tracking-wider text-indigo-400 uppercase">
                   Workspace

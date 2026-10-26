@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaUser,
   FaEnvelope,
@@ -42,6 +42,15 @@ const Profile = () => {
   const [dailyGoal, setDailyGoal] = useState(profile.dailyGoal || 5);
   const [saveMessage, setSaveMessage] = useState("");
   const [importError, setImportError] = useState("");
+
+  useEffect(() => {
+    setName(profile.name || "");
+    setRole(profile.role || "");
+    setEmail(profile.email || "");
+    setBio(profile.bio || "");
+    setAvatar(profile.avatar || "");
+    setDailyGoal(profile.dailyGoal || 5);
+  }, [profile]);
 
   const handleSave = (e) => {
     e.preventDefault();

@@ -42,11 +42,7 @@ export const TaskProvider = ({ children }) => {
         localStorage.getItem("focusboard_profile_v1") ||
         localStorage.getItem("workmatrix_profile_v1");
       if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.name === "Deepak Gupta") {
-          return DEFAULT_PROFILE;
-        }
-        return parsed;
+        return JSON.parse(saved);
       }
       return DEFAULT_PROFILE;
     } catch {
